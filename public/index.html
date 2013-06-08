@@ -5,5 +5,13 @@
   </head>
   <body>
     <h1>EdITS: Support Tracker</h1>
+    <table>
+      <tbody data-bind="foreach: tickets">
+        <tr>
+          <td><input data-bind="value: subject" /></td>
+          <td data-bind="text: subject"></td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

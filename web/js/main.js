@@ -16,11 +16,15 @@ require.config({
 require(
   [
     'knockout',
+    'vm/main'
   ],
   function (
-    ko
+    ko,
+    Main
   ) {
     /* main view model here */
-    
+    //console.log('hello world');
+    var main = new Main();
+    console.log(main);
   }
 );

@@ -23,7 +23,7 @@ require(
     Main
   ) {
     /* main view model here */
-    //console.log('hello world');
+    console.log('hello world');
     var main = new Main();
     console.log(main);
   }

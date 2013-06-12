@@ -7,40 +7,44 @@
 
 define(['knockout'], function (ko) {
   /*"global variables"*/
-  int nextId = 0;
-  function ticket(user, assign) {
-    var self = this,
-    self.id = nextId,
-    self.subject = ko.observable('no subject'), 
-    self.status = "Open",
-    self.createdBy = user,
-    self.assignedTo = assign,
-    self.description = "no description",
-    nextId++;
+  var nextId = 0;
+  function Ticket(user, assign) {
+    var self = this;
+    self.id = nextId;
+    self.subject = ko.observable('no subject');
+    self.stats = ko.observable('Open');
+    self.createdBy = user;
+    self.assignedTo = assign;
+    self.description = ko.observable('no description');
+
+    nextId = nextId + 1;
     return self;
   }
 
-  function user(username, num) {
-    var self = this,
-    self.id = num,
-    self.name = username
+  function User(username, num) {
+    var self = this;
+    self.id = num;
+    self.name = username;
     return self;
   }
 
-  return function (opts) {
+  function List(opts) {
     var self = this,
-    var usergab = new user('gabrielle', 22498461);
-    self.currTicket = ko.observable();
+      usergab = new User('gabrielle', 22498461),
+      userryan = new User('ryan', 123456789);
+
     self.tickets = ko.observableArray([
-      new ticket("client", usergab),
-      new ticket('client 2', usergab)
+      new Ticket('client', usergab),
+      new Ticket('client 2', usergab)
     ]);
 
-    self.addTicket = function(user, assigned) {
-      self.tickets.push(new ticket(user, assigned));
-    }
-    consolelog(self);
-  };
+    self.currTicket = ko.observable(self.tickets()[0]);
 
-  ko.applyBindings(new function());
+    self.addTicket = function (user, assigned) {
+      self.tickets.push(new Ticket(user, assigned));
+    };
+    console.log(self);
+  }
+
+  ko.applyBindings(new List());
 });

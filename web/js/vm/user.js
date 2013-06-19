@@ -25,6 +25,7 @@ define(
       this.addTicket = function (t) {
         self.tickets.push(t)
       }
+      this.id = sets.id;
       /*
       this.username = sets.username;
       this.id = sets.id;

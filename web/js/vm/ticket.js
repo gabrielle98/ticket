@@ -51,7 +51,7 @@ define(
   }
 );
 
-function makeTicket(contact, assign, subject, stat, description) {
+/*function makeTicket(contact, assign, subject, stat, description) {
   var d = new Date(),
     ticket = {
       //'id' : nextId,
@@ -65,5 +65,5 @@ function makeTicket(contact, assign, subject, stat, description) {
   //nextId += 1;
   return ticket;
 }
-
+*/
 

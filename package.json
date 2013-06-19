@@ -6,6 +6,8 @@
   "dependencies" : {
     "htmlpp" : "x",
     "requirejs" : "x",
-    "less" : "x"
+    "less" : "x",
+    "express" : "x",
+    "async" : "x"
   }
 }

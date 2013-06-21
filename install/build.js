@@ -1,5 +1,5 @@
 ({
-  baseUrl: "web/js/libs",
+  baseUrl: "../web/js/libs",
   paths : {
     app : "..",
     vm : "../vm",
@@ -7,5 +7,5 @@
   },
   include: "requireLib",
   name : "app/main",
-  out : "public/js/main.js"
+  out : "../public/js/main.js"
 })

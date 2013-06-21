@@ -1,0 +1,13 @@
+{
+  "name" : "EdITS-ticket",
+  "description" : "EdITS support tracker",
+  "version" : "0.0.1",
+  "private" : true,
+  "dependencies" : {
+    "htmlpp" : "x",
+    "requirejs" : "x",
+    "less" : "x",
+    "express" : "x",
+    "async" : "x"
+  }
+}

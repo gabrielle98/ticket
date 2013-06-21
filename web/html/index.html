@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>EdITS: Support Tracker</title>
+    <script type="text/javascript" src="/js/main.js"></script>
+  </head>
+  <body>
+    <h1>EdITS: Support Tracker</h1>
+    <table>
+      <thead><tr>
+      <th>ID</th><th>Subject</th><th>Status</th><th>Created By</th><th>Assigned To</th>
+      </tr></thead>
+      <tbody data-bind="foreach: $root.tickets">
+        <tr>
+          <td><a href="#" data-bind="text:id, click: function () { $root.currTicket($data); }"></a></td>
+          <td data-bind="text: subject"></td>
+          <td data-bind="text: stats"></td>
+          <td data-bind="text: createdBy"></td>
+          <td data-bind="text: assignedTo.username"></td>
+        </tr>
+      </tbody>
+    </table>
+
+<!--    <table>
+      <thead><tr>
+        <th>Subject</th><th>Description</th><th>Assigned To</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <input data-bind='value: newSub' />
+          <td><input data-bind="value: newDesc"></td>
+          <td>
+            <label><input type="radio" value="gabrielle" data-bind="checked: newAssigned" />Gabrielle</label>
+            <label><input type="radio" value="ryan" data-bind="checked: newAssigned" />Ryan</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+-->
+    <form data-bind="submit: addTicket">
+      Subject:
+      <input data-bind='value: newSub'/>
+      Description:
+      <input data-bind='value: newDesc'/>
+      <button type='submit'>Submit</button>
+    </form>
+
+    <div data-bind="with: currTicket">
+      <h3 data-bind="text:subject"></h3> 
+      <p><label>Created By: </label><span data-bind="text: createdBy"></span></p>
+      <p><label>Assigned To: </label><span data-bind="text: assignedTo.username"></span></p>
+      <p><label>Status: </label><span data-bind="text: stats"></span></p>
+      <p data-bind="text: description"></p> 
+    </div> 
+  </body>
+</html>

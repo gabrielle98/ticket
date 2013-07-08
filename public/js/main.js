@@ -10994,15 +10994,11 @@ define('vm/user',
       var self = this,
         sets = {
           'id' : 0,
-          'username' : 'default',
-          'tickets' : []
+          'username' : 'default'
         };
       sets = $.extend({}, sets, opts);
       //$.extend(this, sets, opts);
       this.username = ko.observable(sets.username);
-      this.addTicket = function (t) {
-        self.tickets.push(t)
-      }
       this.id = sets.id;
       /*
       this.username = sets.username;
@@ -11052,7 +11048,7 @@ define('vm/ticket',
     //global area
     var nextId = 0;
     return function (opts) {
-      var self = this,
+      var tick,
         sets = {
           'id' : nextId,
           'createdBy' : 'default user',
@@ -11062,15 +11058,9 @@ define('vm/ticket',
           'description' : 'no description',
           'stats' : 'Open'
         };
-      sets = $.extend({}, sets, opts);
-      this.id = sets.id;
-      this.createdBy = sets.createdBy;
-      this.date = sets.date;
-      this.assignedTo = sets.assignedTo;
-      this.subject = sets.subject;
-      this.description = sets.description;
-      this.stats = sets.stats;
+      tick = $.extend({}, sets, opts);
       nextId += 1;
+      return tick;
     };
   }
 );
@@ -11097,31 +11087,11 @@ define('vm/ticket',
 //Written by Gabrielle Person
 
 
-/*jslint node:true, indent:2, nomen:true*/
+/*jslint browser:true, indent:2, nomen:true*/
+/*globals define*/
 
-define('vm/main',['knockout', '../vm/user', '../vm/ticket'], function (ko, User, Ticket) {
+define('vm/main',['knockout', 'jquery', 'vm/user', 'vm/ticket'], function (ko, $, User, ticket) {
   /*"global variables"*/
-/*  var nextId = 0,
-    ticket = function (user, assign, sub, stat, desc) {
-      var self = this;
-      self.id = nextId;
-      self.subject = ko.observable(sub);
-      self.stats = ko.observable(stat);
-      self.createdBy = user;
-      self.assignedTo = assign;
-      self.description = ko.observable(desc);
-
-      nextId = nextId + 1;
-      return self;
-    },
-
-    user = function (username, num) {
-      var self = this;
-      self.id = num;
-      self.name = username;
-      return self;
-    },
-*/
   return function (opts) {
     var self = this,
       usergab = new User({
@@ -11133,6 +11103,7 @@ define('vm/main',['knockout', '../vm/user', '../vm/ticket'], function (ko, User,
         'id' : 123456789
       });
 
+    /*
     self.tickets = ko.observableArray([
       new Ticket({
         'assignedTo' : usergab,
@@ -11148,8 +11119,24 @@ define('vm/main',['knockout', '../vm/user', '../vm/ticket'], function (ko, User,
         'description' : 'There is a very long description'
       })
     ]);
+    */
 
-    self.currTicket = ko.observable(self.tickets()[0]);
+    self.loadTickets = function () {
+      //$.get
+      var req = $.ajax({
+        'url' : '/ticket',
+        'type' : 'get',
+        'dataType' : 'json',
+      }).done(function (tickets) {
+        console.log(tickets);
+        $.each(tickets, function (i, tick) {
+          self.tickets.push(ticket(tick));
+        });
+      });
+    };
+
+    self.tickets = ko.observableArray();
+    self.currTicket = ko.observable();
 
     self.newSub = ko.observable('subject here');
     self.newDesc = ko.observable('description here');
@@ -11159,11 +11146,17 @@ define('vm/main',['knockout', '../vm/user', '../vm/ticket'], function (ko, User,
     };
 
     self.addTicket = function () {
-      self.tickets.push(new Ticket({
+      var tick = ticket({
         'subject' : self.newSub(),
         'stats' : 'Open',
-        'description' : self.newDesc()
-      }));
+        'description' : self.newDesc(),
+        'assignedTo' : usergab
+      });
+      console.log(tick);
+      $.post('/ticket', tick, null, 'json').done(function (res) {
+        console.log(res);
+      });
+      self.tickets.push(tick);
     };
   };
 
@@ -11175,44 +11168,15 @@ define('vm/main',['knockout', '../vm/user', '../vm/ticket'], function (ko, User,
 
 
 /*jslint node:true, indent:2, nomen:true*/
-/*
-require.config({
-  baseUrl : 'web/js/libs',
-  paths: {
-    app: '..',
-    vm: '../vm',
-  },
-  shim : {
-  }
-});
-*/
 require(
   [
     'knockout',
-    'vm/main',
-    'vm/ticket',
-    'vm/user'
+    'vm/main'
   ],
   function (
     ko,
-    Main,
-    Ticket,
-    User
+    Main
   ) {
-    /* main view model here */
-    /* console.log('hello world');
-    console.log(User.glob);
-    var u = new User();
-    u.username = "bob";
-    console.log(u);
-    var u2 = new User({
-      'username' : 'bonno'
-    });
-    console.log(u2);
-    //var starter = main();
-    //console.log(starter);
-    //ko.applyBindings(starter);
-*/
     var main = new Main();
     console.log(main.tickets());
     ko.applyBindings(main);

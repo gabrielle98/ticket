@@ -28,7 +28,7 @@ define(
     //global area
     var nextId = 0;
     return function (opts) {
-      var self = this,
+      var tick,
         sets = {
           'id' : nextId,
           'createdBy' : 'default user',
@@ -38,15 +38,9 @@ define(
           'description' : 'no description',
           'stats' : 'Open'
         };
-      sets = $.extend({}, sets, opts);
-      this.id = sets.id;
-      this.createdBy = sets.createdBy;
-      this.date = sets.date;
-      this.assignedTo = sets.assignedTo;
-      this.subject = sets.subject;
-      this.description = sets.description;
-      this.stats = sets.stats;
+      tick = $.extend({}, sets, opts);
       nextId += 1;
+      return tick;
     };
   }
 );

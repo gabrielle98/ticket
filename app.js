@@ -12,14 +12,11 @@ var app = express();
 
 app.configure(function () {
   app.set('port', process.env.PORT || config.port);
-  /*
-  enable these as you need them
-  app.use(express.favicon(__dirname + '/public/favicon.ico'));
+  //app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session(config.session));
-  */
+  //app.use(express.session(config.session));
   app.use(express.static(path.join(__dirname, 'public')));
   //app.use(express.csrf());
   app.use(app.router);
@@ -46,7 +43,7 @@ app.configure('production', function () {
 });
 
 //add your routes here
-//require('./routes/index.js')(app);
+require('./routes.js')(app);
 
 var server = app.listen(app.get('port'), function () {
   var date = new Date();

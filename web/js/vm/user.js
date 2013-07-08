@@ -16,15 +16,11 @@ define(
       var self = this,
         sets = {
           'id' : 0,
-          'username' : 'default',
-          'tickets' : []
+          'username' : 'default'
         };
       sets = $.extend({}, sets, opts);
       //$.extend(this, sets, opts);
       this.username = ko.observable(sets.username);
-      this.addTicket = function (t) {
-        self.tickets.push(t)
-      }
       this.id = sets.id;
       /*
       this.username = sets.username;

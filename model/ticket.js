@@ -5,19 +5,19 @@
 'use strict';
 /*jslint node:true, indent:2, nomen:true*/
 var nextId = 0;
-function makeTicket(contact, subject, description) {
+
+var makeTicket = function (contact, subject, description, person) {
   var d = new Date(),
     ticket = {
       'id' : nextId,
-      'contact' : contact,
-      'created' : d,
-      'assigned' : false,
+      'createdBy' : contact,
+      'assignedTo' : person,
       'subject' : subject,
       'description' : description,
-      'status' : 'submitted'
+      'stats' : 'Open'
     };
   nextId += 1;
   return ticket;
-}
+};
 
 exports.makeTicket = makeTicket;

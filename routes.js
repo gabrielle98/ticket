@@ -4,17 +4,10 @@
 
 'use strict';
 /*jslint node:true, indent:2, nomen:true*/
-require(
-  [
-    'knockout',
-    'vm/main'
-  ],
-  function (
-    ko,
-    Main
-  ) {
-    var main = new Main();
-    console.log(main.tickets());
-    ko.applyBindings(main);
-  }
-);
+
+var ticket = require('./cntl/ticket.js');
+
+module.exports = function (app) {
+  app.get('/ticket', ticket.loadAll);
+  app.post('/ticket', ticket.save);
+};
